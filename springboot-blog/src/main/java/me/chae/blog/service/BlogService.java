@@ -23,8 +23,15 @@ public class BlogService {
 		// save(): JpaRepository에서 지원하는 저장 메서드
 	}
 	
-	// 블로그 글 조회
+	// 블로그 글 전체 조회
 	public List<Article> findAll() {
 		return blogRepository.findAll();	// JPA 지원 메서드
 	}
+	
+	// 블로그 글 조회
+	public Article findById(long id) {
+		return blogRepository.findById(id)
+							 .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
+	}
+	
 }
