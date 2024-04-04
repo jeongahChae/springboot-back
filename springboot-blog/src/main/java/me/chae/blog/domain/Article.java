@@ -37,4 +37,8 @@ public class Article {
 //	객체 생성 코드의 가독성이 높아짐
 //	어노테이션 사용 > 빌더 패턴을 사용하기 위한 코드를 자동으로 생성하여 간편하게 빌더패턴을 사용할 수 있음
 
+	public void update(String title, String content) {
+		this.title = title;
+		this.content = content;
+	}
 }

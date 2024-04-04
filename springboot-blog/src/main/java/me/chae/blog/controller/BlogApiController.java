@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import me.chae.blog.domain.Article;
 import me.chae.blog.dto.AddArticleRequest;
 import me.chae.blog.dto.ArticleResponse;
+import me.chae.blog.dto.UpdateArticleRequest;
 import me.chae.blog.service.BlogService;
 
 @RequiredArgsConstructor
@@ -59,5 +61,12 @@ public class BlogApiController {
 		blogService.delete(id);
 		
 		return ResponseEntity.ok().build();
+	}
+	
+	@PutMapping("/api/articles/{id}")
+	public ResponseEntity<Article> updateArticle(@PathVariable(name = "id") long id, @RequestBody UpdateArticleRequest request) {
+		Article updateArticle = blogService.update(id, request);
+		
+		return ResponseEntity.ok().body(updateArticle);
 	}
 }

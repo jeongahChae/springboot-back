@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -25,6 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import me.chae.blog.domain.Article;
 import me.chae.blog.dto.AddArticleRequest;
+import me.chae.blog.dto.UpdateArticleRequest;
 import me.chae.blog.repository.BlogRepository;
 
 @SpringBootTest	// 테스트용 애플리케이션 컨텍스트
@@ -146,4 +148,37 @@ class BlogApiControllerTest {
 		assertThat(articles).isEmpty();
 		
 	}
+	
+	@DisplayName("updateArticle: 블로그 글 수정에 성공한다.")
+	@Test
+	public void updateArticle() throws Exception {
+		
+		// given: 블로그 글 저장, 글 수정에 필요한 요청 객체 생성
+		final String url = "/api/articles/{id}";
+		final String title = "title";
+		final String content = "content";
+		
+		Article savedArticle = blogRepository.save(Article.builder().title(title).content(content).build());
+		
+		final String newTitle = "new Title";
+		final String newContent = "new content";
+		
+		UpdateArticleRequest request = new UpdateArticleRequest(newTitle, newContent);
+		
+		// when: update API로 수정 요청 보냄(요청 타입: JSON, given에서 만든 객체를 요청 본문으로 함께 보냄)
+		ResultActions result = mockMvc.perform(put(url, savedArticle.getId())
+												.contentType(MediaType.APPLICATION_JSON_VALUE)
+												.content(objectMapper.writeValueAsString(request)));
+		
+		// then: 응답 코드(200), 블로그 글 id로 조회한 후 값이 수정되었는지 확인
+		result.andExpect(status().isOk());
+		
+		Article article = blogRepository.findById(savedArticle.getId()).get();
+		
+		assertThat(article.getTitle()).isEqualTo(newTitle);
+		assertThat(article.getContent()).isEqualTo(newContent);
+		
+	}
+	
+	//BlogService에 대해서도 테스트 코드를 작성하는 것이 좋음
 }

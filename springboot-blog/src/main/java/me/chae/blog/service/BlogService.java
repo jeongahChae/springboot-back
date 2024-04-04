@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import me.chae.blog.domain.Article;
 import me.chae.blog.dto.AddArticleRequest;
+import me.chae.blog.dto.UpdateArticleRequest;
 import me.chae.blog.repository.BlogRepository;
 
 @RequiredArgsConstructor	// final이 붙거나 @NotNull이 붙은 필드로 생성자 추가(빈을 생성자로 등록)
@@ -38,5 +40,15 @@ public class BlogService {
 	public void delete(long id) {
 		blogRepository.deleteById(id);
 	}
-	
+
+	// 블로그 글 수정
+	@Transactional
+	public Article update(long id, UpdateArticleRequest request) {
+		Article article = blogRepository.findById(id)
+										.orElseThrow(() -> new IllegalArgumentException("not found: " + id));
+		
+		article.update(request.getTitle(), request.getContent());
+		
+		return article;
+	}
 }
