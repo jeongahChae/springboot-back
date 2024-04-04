@@ -1,5 +1,7 @@
 package me.chae.blog.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +21,10 @@ public class BlogService {
 	public Article save(AddArticleRequest request) {
 		return blogRepository.save(request.toEntity());
 		// save(): JpaRepository에서 지원하는 저장 메서드
+	}
+	
+	// 블로그 글 조회
+	public List<Article> findAll() {
+		return blogRepository.findAll();	// JPA 지원 메서드
 	}
 }
