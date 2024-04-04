@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,5 +52,12 @@ public class BlogApiController {
 		
 		return ResponseEntity.ok()
 							 .body(new ArticleResponse(article));
+	}
+	
+	@DeleteMapping("/api/articles/{id}")
+	public ResponseEntity<Void> deleteArticle(@PathVariable(name = "id") long id) {
+		blogService.delete(id);
+		
+		return ResponseEntity.ok().build();
 	}
 }
