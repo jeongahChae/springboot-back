@@ -1,5 +1,10 @@
 package me.chae.blog.domain;
 
+import java.time.LocalDateTime;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,6 +41,14 @@ public class Article {
 //	어느 필드에 어떤 값이 들어가는지 명시적으로 파악
 //	객체 생성 코드의 가독성이 높아짐
 //	어노테이션 사용 > 빌더 패턴을 사용하기 위한 코드를 자동으로 생성하여 간편하게 빌더패턴을 사용할 수 있음
+	
+	@CreatedDate
+	@Column(name = "created_at")
+	private LocalDateTime createdAt;
+	
+	@LastModifiedDate
+	@Column(name = "updated_at")
+	private LocalDateTime updatedAt;
 
 	public void update(String title, String content) {
 		this.title = title;
