@@ -13,8 +13,9 @@
 		<p th:text="|나이 : *{age}|"></p>
 		<p>취미</p>
 		<ul th:each="hobby : *{hobbies}">
+			<li th:text="${hobby}"></li>
 			<!-- 반복 대상이 운동이라면 '대표 취미'라는 표시 추가 -->
-			<li th:text="${hobby == '운동'}">(대표취미)</li>
+			<span th:if="${hobby == '운동'}">(대표취미)</span>
 		</ul>
 	</div>
 	

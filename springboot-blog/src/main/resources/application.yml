@@ -17,5 +17,9 @@ spring:
   h2:
     console:
       enabled: true
-
-        
+  thymeleaf:
+    prefix: classpath:templates/
+    suffix: .html
+    mode: HTML5
+    check-template-location: true
+    cache: false
