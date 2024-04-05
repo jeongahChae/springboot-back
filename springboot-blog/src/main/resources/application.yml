@@ -27,3 +27,6 @@ spring:
     mode: HTML5
     check-template-location: true
     cache: false
+jwt:
+  issuer: c@j.a
+  secret_key: study-springbootk
