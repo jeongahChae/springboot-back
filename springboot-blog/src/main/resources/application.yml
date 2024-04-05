@@ -11,12 +11,16 @@ spring:
     #테이블 생성 후 data.sql 실행
     defer-datasource-initialization: true 
   
+  #database 정보 추가
   datasource:
     url: jdbc:h2:mem:testdb
+    username: sa
   
+  #h2콘솔 활성화(실제 db에 추가되는 데이터를 확인하기 위해 콘솔 활성화)
   h2:
     console:
       enabled: true
+      
   thymeleaf:
     prefix: classpath:templates/
     suffix: .html
